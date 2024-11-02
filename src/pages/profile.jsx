@@ -19,7 +19,7 @@ function Profile() {
   const fetchUserPreferences = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9001/api/preferences/get/${user._id}`
+        `https://news-service-320c.onrender.com/api/preferences/get/${user._id}`
       );
       setUserPreferences(response.data.preferences);
     } catch (error) {
@@ -33,12 +33,19 @@ function Profile() {
     fetchUserPreferences();
   }, [user._id]);
 
+  useEffect(() => {
+    // Scroll to the top when loading
+    if (loading) {
+      window.scrollTo(0, 0);
+    }
+  }, [loading]);
+
   const onSubmit = async (values, { resetForm }) => {
     setLoading(true);
     try {
       const response = userPreferences?.categories
         ? await axios.put(
-            `http://localhost:9001/api/preferences/update/${userPreferences._id}`,
+            `https://news-service-320c.onrender.com/api/preferences/update/${userPreferences._id}`,
             {
               user_id: user._id,
               email_frequency: values.email_frequency,
@@ -46,12 +53,15 @@ function Profile() {
               categories: values.categories,
             }
           )
-        : await axios.post("http://localhost:9001/api/preferences/create", {
-            user_id: user._id,
-            email_frequency: values.email_frequency,
-            notification_type: values.notification_type,
-            categories: values.categories,
-          });
+        : await axios.post(
+            "https://news-service-320c.onrender.com/api/preferences/create",
+            {
+              user_id: user._id,
+              email_frequency: values.email_frequency,
+              notification_type: values.notification_type,
+              categories: values.categories,
+            }
+          );
 
       if (response.status === 200 || response.status === 201) {
         message.success(

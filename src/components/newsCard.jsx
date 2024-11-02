@@ -10,7 +10,7 @@ const NewsCard = ({ news, deleteNews }) => {
   const handleSaveArticle = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:9001/api/saved-articles/save`,
+        `https://news-service-320c.onrender.com/api/saved-articles/save`,
         {
           user_id: user._id,
           article_id: news.article_id,
@@ -75,7 +75,6 @@ const NewsCard = ({ news, deleteNews }) => {
         <div className="mt-4 flex justify-between items-center text-sm text-gray-500">
           <div className="flex items-center space-x-2">
             <span className="font-semibold">{news.country}</span>
-            <span>{new Date(news.pubDate).toLocaleDateString()}</span>
           </div>
           <div className="flex items-center space-x-2">
             <img
@@ -88,8 +87,9 @@ const NewsCard = ({ news, deleteNews }) => {
         </div>
 
         {/* Category */}
-        <div className="text-xs text-gray-400 mt-2">
+        <div className="text-xs text-gray-400 mt-2 flex justify-between items-center">
           <span>{news?.category?.join(", ")}</span>
+          <span>{new Date(news.pubDate).toLocaleDateString()}</span>
         </div>
 
         {/* Actions */}

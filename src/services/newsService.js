@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:9001/api";
+const BASE_URL = "https://news-service-320c.onrender.com/api";
 import axios from "axios";
 
 export default class NewsService {

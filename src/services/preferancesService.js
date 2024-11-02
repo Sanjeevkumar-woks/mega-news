@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:9001/api/preferences";
+const BASE_URL = "https://news-service-320c.onrender.com/api/preferences";
 
 export default class PreferencesService {
   static SUBSCRIBE = "/create";

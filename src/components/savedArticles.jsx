@@ -13,7 +13,7 @@ const SavedArticles = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:9001/api/saved-articles/get/${user._id}`
+        `https://news-service-320c.onrender.com/api/saved-articles/get/${user._id}`
       );
       setArticles(response.data);
     } catch (error) {
@@ -32,7 +32,7 @@ const SavedArticles = () => {
   const handleDeleteArticle = async (articleId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:9001/api/saved-articles/delete/${articleId}`
+        `https://news-service-320c.onrender.com/api/saved-articles/delete/${articleId}`
       );
       if (response.status === 200) {
         fetchSavedArticles();

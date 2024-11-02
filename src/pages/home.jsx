@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Hero from "../components/hero";
 import NewsList from "../components/newsList";
 import SubscriptionForm from "../components/subscribe";
@@ -6,6 +7,13 @@ import useNews from "../hooks/useNews";
 
 const Home = () => {
   const { topNews, entertainment, lifeStyle, business, loading } = useNews();
+
+  useEffect(() => {
+    // Scroll to the top when loading
+    if (loading) {
+      window.scrollTo(0, 0);
+    }
+  }, [loading]); // Add loading as a dependency
 
   return (
     <>

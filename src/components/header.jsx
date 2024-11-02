@@ -23,7 +23,7 @@ const Header = () => {
     const fetchNotifications = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:9001/api/notifications/get-notifications-by-user/${user._id}`
+          `https://news-service-320c.onrender.com/api/notifications/get-notifications-by-user/${user._id}`
         );
         setNotifications(data);
       } catch (error) {
@@ -120,6 +120,27 @@ const Header = () => {
     </Menu>
   );
 
+  const SearchMenu = (
+    <Menu>
+      {searchResults?.length > 0 &&
+        searchResults?.map((result) => (
+          <a
+            key={result.id}
+            href={result.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            onClick={() => {
+              setSearch("");
+              setSearchResults([]);
+            }}
+          >
+            {result.title}
+          </a>
+        ))}
+    </Menu>
+  );
+
   return (
     <div>
       <header
@@ -175,23 +196,28 @@ const Header = () => {
 
             {/* Search results dropdown */}
             {searchResults.length > 0 && (
-              <div className="absolute top-full left-0 w-full bg-white shadow-md overflow-y-auto rounded-md mt-1 z-50 max-h-80">
-                {searchResults.map((result) => (
-                  <a
-                    key={result.id}
-                    href={result.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => {
-                      setSearch("");
-                      setSearchResults([]);
-                    }}
-                  >
-                    {result.title}
-                  </a>
-                ))}
-              </div>
+              <Dropdown overlay={SearchMenu} trigger={["click"]}>
+                <div
+                  className="absolute top-full left-0 w-full bg-white shadow-md overflow-y-auto  rounded-md mt-1 z-50 max-h-80"
+                  onClick={() => setSearch("")}
+                >
+                  {searchResults.map((result) => (
+                    <a
+                      key={result.id}
+                      href={result.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        setSearch("");
+                        setSearchResults([]);
+                      }}
+                    >
+                      {result.title}
+                    </a>
+                  ))}
+                </div>
+              </Dropdown>
             )}
           </div>
 
@@ -233,7 +259,18 @@ const Header = () => {
             {/* Notification Icon */}
             {user && (
               <Dropdown
-                overlay={notificationsMenu}
+                overlay={
+                  <div
+                    style={{
+                      maxHeight: "300px",
+                      overflowY: "auto",
+                      scrollbarWidth: "none",
+                      "-ms-overflow-style": "none",
+                    }}
+                  >
+                    {notificationsMenu}
+                  </div>
+                }
                 trigger={["click"]}
                 placement="bottomRight"
               >

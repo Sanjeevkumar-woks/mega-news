@@ -17,7 +17,7 @@
 
 //   const fetchUserPreferences = async () => {
 //     const response = await axios.get(
-//       `http://localhost:9001/api/preferences/get/${user._id}`
+//       `https://news-service-320c.onrender.com/api/preferences/get/${user._id}`
 //     );
 //     setUserPreferences(response.data.preferences);
 //   };
@@ -29,8 +29,8 @@
 //   const onSubmit = async (values) => {
 //     try {
 //       const endpoint = userPreferences
-//         ? `http://localhost:9001/api/preferences/update/${userPreferences._id}`
-//         : "http://localhost:9001/api/preferences/create";
+//         ? `https://news-service-320c.onrender.com/api/preferences/update/${userPreferences._id}`
+//         : "https://news-service-320c.onrender.com/api/preferences/create";
 //       const response = await axios({
 //         method: userPreferences ? "put" : "post",
 //         url: endpoint,

@@ -29,7 +29,7 @@ const SubscriptionForm = () => {
     try {
       // Check if preferences already exist
       const preference = await axios.get(
-        `http://localhost:9001/api/preferences/get/${user._id}`
+        `https://news-service-320c.onrender.com/api/preferences/get/${user._id}`
       );
 
       if (preference.status === 200) {
@@ -45,7 +45,7 @@ const SubscriptionForm = () => {
         try {
           // Create new preferences
           const response = await axios.post(
-            "http://localhost:9001/api/preferences/create",
+            "https://news-service-320c.onrender.com/api/preferences/create",
             {
               user_id: user._id,
               email_frequency: "immediately",

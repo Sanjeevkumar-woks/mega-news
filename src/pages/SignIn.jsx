@@ -32,7 +32,7 @@ const SignIn = () => {
     onSubmit: async (values) => {
       try {
         const response = await fetch(
-          "http://localhost:9001/api/auth/register",
+          "https://news-service-320c.onrender.com/api/auth/register",
           {
             method: "POST",
             headers: {
@@ -48,7 +48,7 @@ const SignIn = () => {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || "Registration failed");
+          message.error(errorData.error || "Registration failed");
         }
 
         formik.resetForm();
