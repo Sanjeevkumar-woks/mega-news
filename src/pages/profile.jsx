@@ -29,6 +29,22 @@ function Profile() {
     }
   };
 
+  const unsubscribe = () => {
+    if (userPreferences) {
+      axios
+        .delete(
+          `https://news-service-320c.onrender.com/api/preferences/delete/${userPreferences._id}`
+        )
+        .then(() => {
+          message.success("Preferences deleted successfully.");
+          fetchUserPreferences();
+        })
+        .catch((error) => {
+          message.error("Failed to delete preferences.");
+        });
+    }
+  };
+
   useEffect(() => {
     fetchUserPreferences();
   }, [user._id]);
@@ -183,6 +199,17 @@ function Profile() {
           )}
         </Formik>
       )}
+
+      <div className="flex justify-items-end items-end">
+        <Button
+          type="text"
+          htmlType="submit"
+          className=" text-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
+          onClick={unsubscribe}
+        >
+          unsubscribe
+        </Button>
+      </div>
     </div>
   );
 }
