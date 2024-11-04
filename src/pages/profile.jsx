@@ -4,6 +4,7 @@ import { Form, Input, Checkbox, Radio, Select, Button, message } from "antd";
 import { useSelector } from "react-redux";
 import categories from "../utils/categories";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -26,31 +27,6 @@ function Profile() {
       message.error("Please set your preferences.");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const unsubscribe = () => {
-    if (!userPreferences) {
-      message.error("Please set your preferences.");
-      return;
-    }
-    //modify alert
-    if (!window.confirm("Are you sure you want to unsubscribe?")) {
-      return;
-    }
-
-    if (userPreferences) {
-      axios
-        .delete(
-          `https://news-service-320c.onrender.com/api/preferences/delete/${userPreferences.user_id}`
-        )
-        .then(() => {
-          message.success("Preferences deleted successfully.");
-          fetchUserPreferences();
-        })
-        .catch((error) => {
-          message.error("Failed to delete preferences.");
-        });
     }
   };
 
@@ -209,15 +185,10 @@ function Profile() {
         </Formik>
       )}
 
-      <div className="flex justify-items-end items-end">
-        <Button
-          type="text"
-          htmlType="submit"
-          className=" text-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
-          onClick={unsubscribe}
-        >
+      <div className="flex flex-row-reverse">
+        <Link to={`/unsubscribe/${user._id}`} className="text-blue-500">
           unsubscribe
-        </Button>
+        </Link>
       </div>
     </div>
   );

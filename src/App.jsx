@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/home";
 import Category from "./components/category";
 import Header from "./components/header";
@@ -19,6 +19,7 @@ import Profile from "./pages/profile";
 import PageNotFound from "./pages/PageNotFound";
 import SavedArticles from "./components/savedArticles";
 import { useEffect } from "react";
+import Unsubscribe from "./pages/unsubscribe";
 // Custom Route for Protected Routes (Requires Auth)
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -33,6 +34,8 @@ const AuthRoute = ({ children }) => {
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const isUnsubscribePage = location.pathname === "/unsubscribe";
 
   // Check if token exists in local storage and set user in redux if available
   useEffect(() => {
@@ -50,8 +53,9 @@ function App() {
 
   return (
     <>
-      <Header />
-      <CategoriesBar />
+      {!isUnsubscribePage && <Header />}
+      {!isUnsubscribePage && <CategoriesBar />}
+
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
@@ -112,9 +116,19 @@ function App() {
         />
 
         {/* Catch-All for 404 */}
+
+        <Route
+          path="/unsubscribe/:user_id"
+          element={
+            <div className="absolute inset-0 min-w-screen min-h-screen flex flex-col z-50 bg-white">
+              <Unsubscribe />
+            </div>
+          }
+        />
+
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      <Footer />
+      {!isUnsubscribePage && <Footer />}
     </>
   );
 }
