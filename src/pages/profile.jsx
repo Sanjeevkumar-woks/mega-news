@@ -30,10 +30,19 @@ function Profile() {
   };
 
   const unsubscribe = () => {
+    if (!userPreferences) {
+      message.error("Please set your preferences.");
+      return;
+    }
+    //modify alert
+    if (!window.confirm("Are you sure you want to unsubscribe?")) {
+      return;
+    }
+
     if (userPreferences) {
       axios
         .delete(
-          `https://news-service-320c.onrender.com/api/preferences/delete/${userPreferences._id}`
+          `https://news-service-320c.onrender.com/api/preferences/delete/${userPreferences.user_id}`
         )
         .then(() => {
           message.success("Preferences deleted successfully.");
